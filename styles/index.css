@@ -13,6 +13,7 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 .mainSplitter {
     display: flex;
@@ -23,49 +24,43 @@ body {
 }
 /* INTRO SECTION */
 #introSection {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
 }
-#introHeader {
-    grid-column-start: 1;
-    grid-column-end: 3;
+.introHeader {
     margin: 0px;
     padding: 0px;
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     font-family: Verdana, Tahoma, sans-serif;
 }
-
-/* PLAYGROUND SECTION */
-#playground {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-#outputMatrixWrap {
-    padding: 0px;
+.introText {
     margin: 0px;
-}
-#outputMatrix {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    background-image: url('../images/matrixbox.png');
-    background-size: cover;
-    background-repeat: no-repeat;
     padding: 0px;
+    font-size: 16px;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.labeledMatrix {
+    table-layout: fixed;
+    width: 100%;
     margin: 0px;
-}
-.matrixTitle {
-    align-self: center;
-}
-.matrixItem {
-    display: flex;
-    flex-direction: column;
-    width: 50px;
-    height: 50px;
+    padding: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
     text-align: center;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    padding: 0px;
-    margin: 0px;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.labeledMatrix tr td {
+    width: 100%;
+}
+.columnTitle {
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+}
+.rowTitle {
+    border-right-style: dashed;
+    border-right-width: 1px;
+    border-right-color: black;
 }

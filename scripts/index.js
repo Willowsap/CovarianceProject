@@ -19,7 +19,7 @@ function getColumn(a, j) {
  */
 function getTranspose(m) {
     let mT = [];
-    for (let i = 0; i < m.length; i++) {
+    for (let i = 0; i < m[0].length; i++) {
         mT[i] = getColumn(m, i);
     }
     return mT;
@@ -95,7 +95,7 @@ function matrixMultiply(a, b) {
     let product = [];
     for (let i = 0; i < a.length; i++) {
         let product_row = []
-        for (let j = 0; j < a[0].length; j++) {
+        for (let j = 0; j < b[0].length; j++) {
             product_row[j] = dotProduct(a[i], getColumn(b, j));
         }
         product[i] = product_row;
@@ -164,7 +164,7 @@ function matrixMinusVector(a, v) {
     let b = [];
     for (let i = 0; i < a.length; i++) {
         let b_row = a[i];
-        for (let j = 0; j < v.length; j++) {
+        for (let j = 0; j < a[i].length; j++) {
             b_row[j] -= v[j];
         }
         b[i] = b_row;
@@ -299,52 +299,88 @@ class infoPage {
     constructor() {
         this.state = {
             title : "Covariance Matrices",
-            introSection : getIntroSection(),
+            pca : new PrimaryComponentAnalysis()
         };
         
     }
-    getIntroSection(data) {
+    getIntroSection() {
         const introContent = {
             title : "What is a covariance matrix?",
-            introText1 : "This could be explained rather abstractly, but let's look at a concrete example." +
-                         "Imagine a data matrix X. Well, actually let's just look at one. No need to imagine",
-            introDataMatrix : {
-                rowTitles : ["house 1", "house 2", "house 3"],
-                columnTitle : ["Size, Number of Bathrooms", "Number of Rooms", "Price", "Age of Owner", "Age of House"],
-                matrix : [
-                    [100, 2, 6, 200000, 55, 20],
-                    [200, 4, 12, 2000000, 30, 5],
-                    [50, 1, 3, 400000, 45, 40],
+            matrix : [
+                [2, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9],
                 ]
-            },
-            introText2 : "As you can see, each row of the matrix represents a house and each column represents some information about the house."
         }
         let introSection = document.createElement('section');
-        let introTitle = document.createElement('h2').appendChild(document.createTextNode(introContent.title));
-        let introDataMatrix = createLabeledMatrix(introContent.introDataMatrix);
-                
+            introSection.setAttribute('id', 'introSection');
+        let introTitle = document.createElement('h2');
+            introTitle.setAttribute('class', 'introHeader');
+        let mathInputMatrix = document.createElement('div');
+            mathInputMatrix.innerHTML = this.buildMathMatrix(introContent.matrix, "X");
+        let mathCovMatrix = document.createElement('div');
+            mathCovMatrix.innerHTML = this.buildMathMatrix(this.state.pca.cov(introContent.matrix), "\\Sigma");
+        introSection.appendChild(introTitle);
+        introSection.appendChild(mathInputMatrix);
+        introSection.appendChild(mathCovMatrix);
 
+        return { section : "sectionA", content : introSection};
     }
     loadPage() {
         // create header 
         document.getElementById("pageHeader").innerHTML = this.state.title;
-        this.loadIntroSection(this.state.introSection);
-        this.loadPlaygroundSection(this.state.playgroundSection);
+        let intro = this.getIntroSection();
+        document.getElementById(intro.section).appendChild(intro.content);
     }
-    createLabeledMatrix(matrix) {
-        document.createElement('article').setAttribute('class ')
-    }
-    buildOutputMatrix(data) {
-        let matrix = "<div id='outputMatrix'>"
-        //matrix += "<div class='matrixTitle'>" + data.matrixName + " = </div>";
-        for (let i = 0; i < data.matrix.length; i++) {
-            for (let j = 0; j < data.matrix[i].length; j++) {
-                matrix += "<div class='matrixItem'>";
-                matrix += data.matrix[i][j];
-                matrix += "</div>";
+    createLabeledMatrix(matrixInfo) {
+        let m = matrixInfo.rowTitles.length;
+        let n = matrixInfo.columnTitles.length;
+        let matrix = document.createElement('table')
+        matrix.setAttribute('class', 'labeledMatrix');
+        for (let i = 0; i < m + 1; i++) {
+            let row = document.createElement('tr');
+            for (let j = 0; j < n + 1; j++) {
+                let entry = document.createElement('td');
+                if (i == 0) {
+                    if (j == 0) {
+                        entry.appendChild(document.createTextNode(""));    
+                    } else {
+                        entry.setAttribute('class', 'columnTitle');
+                        entry.appendChild(document.createTextNode(matrixInfo.columnTitles[j - 1]));
+                    }
+                } else if (j == 0) {
+                    entry.setAttribute('class', 'rowTitle');
+                    entry.appendChild(document.createTextNode(matrixInfo.rowTitles[i - 1]));
+                } else {
+                    entry.setAttribute('class', 'matrixEntry');
+                    entry.appendChild(document.createTextNode(matrixInfo.matrix[i - 1][j - 1]));
+                }
+                row.appendChild(entry);
             }
+            matrix.appendChild(row);
         }
-        return matrix + "</div>";
+        return matrix;
+    }
+    createInputMatrix(matrixData) {
+        let inputMatrix = document.createElement('div');
+        inputMatrix.setAttribute('id', 'inputMatrix');
+
+        inputMatrix.appendChild(inputMatrixTitle);
+        for (let i = 0; i < matrixData.x.length; i++) {
+            let inputWrapper = document.createElement('div');
+            inputWrapper.setAttribute('class', 'inputWrapper');
+            for (let j = 0; j < matrixData.x[i].length; j++) {
+                let inputItem = document.createElement('input');
+                inputItem.setAttribute('type', 'number');
+                inputItem.setAttribute('id', 'input' + i + j);
+                inputItem.setAttribute('class', 'matrixEntry');
+                inputItem.onchange = (event) => {reloadResultMatrix(event)};
+                inputItem.setAttribute('value', matrixData.x[i][j]);
+                inputWrapper.appendChild(inputItem);
+            }
+            inputMatrix.appendChild(inputWrapper);
+        }
+        return inputMatrix;
     }
     buildMathMatrix(x, name) {
         let line = "\\[" + name + "=\\begin{bmatrix}";
@@ -361,20 +397,6 @@ class infoPage {
         }
         line += "\\end{bmatrix}\\]";
         return line;
-    }
-    buildList(a) {
-        let list = "<ul>";
-        for (let i = 0; i < a.length; i++) {
-            list += "<li>";
-            if (a[i] instanceof Array) {
-                list += this.buildList(a[i]);
-            } else {
-                list += a[i];
-            }
-            list += "</li>";
-        }
-        list += "</ul>"
-        return list;
     }
 }
 let page = new infoPage();
