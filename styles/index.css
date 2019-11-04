@@ -1,0 +1,71 @@
+body {
+    background-color: lavender;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: fantasy;
+    font-size: 20px;
+}
+#mainContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.mainSplitter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 0.33;
+}
+/* INTRO SECTION */
+#introSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+#introHeader {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin: 0px;
+    padding: 0px;
+    font-size: 18px;
+    text-align: center;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+/* PLAYGROUND SECTION */
+#playground {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+#outputMatrixWrap {
+    padding: 0px;
+    margin: 0px;
+}
+#outputMatrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-image: url('../images/matrixbox.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 0px;
+    margin: 0px;
+}
+.matrixTitle {
+    align-self: center;
+}
+.matrixItem {
+    display: flex;
+    flex-direction: column;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    padding: 0px;
+    margin: 0px;
+}
