@@ -299,62 +299,40 @@ class infoPage {
     constructor() {
         this.state = {
             title : "Covariance Matrices",
-            introSection : {
-                introTitle : "What is a covariance matrix?",
-                introText1 : "This could be explained rather abstractly, but let's look at a concrete example." +
-                                  "Imagine a data matrix X. Well, actually let's just look at one. No need to imagine",
-                introDataMatrix : {
-                    rowTitles : ["house 1", "house 2", "house 3"],
-                    columnTitle : ["Size, Number of Bathrooms", "Number of Rooms", "Price", "Age of Owner", "Age of House"],
-                    matrix : [
-                        [100, 2, 6, 200000, 55, 20],
-                        [200, 4, 12, 2000000, 30, 5],
-                        [50, 1, 3, 400000, 45, 40],
-                    ]
-                },
-                introText2 : "As you can see, each row of the matrix represents a house and each column represents some information about the house."
-                /*
-                covMatrixSection : {
-                    singleCovFormula : "\\[\\sigma_{jk}=\\frac{1}{n}\\sum_{i=1}^n\\left(x_j^{(i)}-\\mu_{j}\\right)\\left(x_k^{(i)}-\\mu_{k}\\right)\\]",
-                    matrix : [["\\sigma_1^2", "\\sigma_{12}", "\\sigma_{13}"],
-                              ["\\sigma_{21}", "\\sigma_2^2", "\\sigma_{23}"],
-                              ["\\sigma_{31}", "\\sigma_{32}", "\\sigma_3^2"]],
-                    header : "What is &Sigma;?",
-                    explanation : [
-                        "First, it's not the summation symbol. Don't get them confused.",
-                        "&Sigma; (pronounced sigma) is the covariance matrix for X.",
-                        "Each element in it represents the variation between two columns (features) of X",
-                    ]
-                }*/
-            },
-            playgroundSection : {
-                pca : new PrimaryComponentAnalysis(),
-                inputSection : {
-                    matrixName : "X",
-                    matrix : [[1, 5, 2], [3, 6, -2], [4, -9, 0]]
-                },
-                outputSection : {
-                    matrixName : "&Sigma;",
-                    matrix : [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-                }
-            }
+            introSection : getIntroSection(),
         };
         
     }
-    loadIntroSection(data) {
-        for (let key in data) {
-            document.getElementById(key).innerHTML = data[key];
+    getIntroSection(data) {
+        const introContent = {
+            title : "What is a covariance matrix?",
+            introText1 : "This could be explained rather abstractly, but let's look at a concrete example." +
+                         "Imagine a data matrix X. Well, actually let's just look at one. No need to imagine",
+            introDataMatrix : {
+                rowTitles : ["house 1", "house 2", "house 3"],
+                columnTitle : ["Size, Number of Bathrooms", "Number of Rooms", "Price", "Age of Owner", "Age of House"],
+                matrix : [
+                    [100, 2, 6, 200000, 55, 20],
+                    [200, 4, 12, 2000000, 30, 5],
+                    [50, 1, 3, 400000, 45, 40],
+                ]
+            },
+            introText2 : "As you can see, each row of the matrix represents a house and each column represents some information about the house."
         }
-    }
-    loadPlaygroundSection(data) {
-        //document.getElementById("inputMatrixWrap").innerHTML = this.buildInputMatrix(data.inputSection);
-        document.getElementById("outputMatrixWrap").innerHTML = this.buildOutputMatrix(data.outputSection);
+        let introSection = document.createElement('section');
+        let introTitle = document.createElement('h2').appendChild(document.createTextNode(introContent.title));
+        let introDataMatrix = createLabeledMatrix(introContent.introDataMatrix);
+                
+
     }
     loadPage() {
         // create header 
         document.getElementById("pageHeader").innerHTML = this.state.title;
         this.loadIntroSection(this.state.introSection);
         this.loadPlaygroundSection(this.state.playgroundSection);
+    }
+    createLabeledMatrix(matrix) {
+        document.createElement('article').setAttribute('class ')
     }
     buildOutputMatrix(data) {
         let matrix = "<div id='outputMatrix'>"
