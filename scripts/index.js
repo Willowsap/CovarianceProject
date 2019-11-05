@@ -248,6 +248,14 @@ function singleCov(x, x_bar, j, k,) {
     }
     return sum * (1 / (x.length - 1));
 }
+function roundMatrix(m) {
+    for (let i = 0; i < m.length; i++) {
+        for (let j = 0; j < m[i].length; j++) {
+            m[i][j] = Math.round(m[i][j] * 100) / 100;
+        }
+    }
+    return m;
+}
 
 class PrimaryComponentAnalysis {
     mean(x) {
@@ -299,37 +307,51 @@ class infoPage {
     constructor() {
         this.state = {
             title : "Covariance Matrices",
-            pca : new PrimaryComponentAnalysis()
+            pca : new PrimaryComponentAnalysis(),
+            introContent : {
+                title : "Play with a Covariance Matrix",
+                matrix : [
+                    [1, 2, 3],
+                    [4, 5, 6],
+                    [7, 8, 9],
+                ]
+            }
         };
         
     }
-    getIntroSection() {
-        const introContent = {
-            title : "What is a covariance matrix?",
-            matrix : [
-                [2, 2, 3],
-                [4, 5, 6],
-                [7, 8, 9],
-                ]
-        }
+    getIntroSection(introContent) {
+        
         let introSection = document.createElement('section');
             introSection.setAttribute('id', 'introSection');
+
         let introTitle = document.createElement('h2');
             introTitle.setAttribute('class', 'introHeader');
-        let mathInputMatrix = document.createElement('div');
-            mathInputMatrix.innerHTML = this.buildMathMatrix(introContent.matrix, "X");
-        let mathCovMatrix = document.createElement('div');
-            mathCovMatrix.innerHTML = this.buildMathMatrix(this.state.pca.cov(introContent.matrix), "\\Sigma");
+            introTitle.appendChild(document.createTextNode(introContent.title));
+
+        let introMatricesWrapper = document.createElement('div');
+            introMatricesWrapper.setAttribute('id', 'introMatricesWrapper');
+            let inputMatrixWrapper = document.createElement('div');
+            inputMatrixWrapper.setAttribute('id', 'inputMatrixWrapper');
+            inputMatrixWrapper.appendChild(this.createInputMatrix(introContent.matrix, "X"));
+
+            let mathCovMatrix = document.createElement('div');
+                let sigmaMatrix = this.createMatrix(roundMatrix(this.state.pca.cov(introContent.matrix)), "&Sigma;");
+                mathCovMatrix.setAttribute('class', 'mathMatrix');
+                mathCovMatrix.setAttribute('id', 'mathCovMatrix');
+                mathCovMatrix.appendChild(sigmaMatrix);
+
+            introMatricesWrapper.appendChild(inputMatrixWrapper);
+            introMatricesWrapper.appendChild(mathCovMatrix);
+
         introSection.appendChild(introTitle);
-        introSection.appendChild(mathInputMatrix);
-        introSection.appendChild(mathCovMatrix);
+        introSection.appendChild(introMatricesWrapper);
 
         return { section : "sectionA", content : introSection};
     }
     loadPage() {
         // create header 
         document.getElementById("pageHeader").innerHTML = this.state.title;
-        let intro = this.getIntroSection();
+        let intro = this.getIntroSection(this.state.introContent);
         document.getElementById(intro.section).appendChild(intro.content);
     }
     createLabeledMatrix(matrixInfo) {
@@ -361,42 +383,86 @@ class infoPage {
         }
         return matrix;
     }
-    createInputMatrix(matrixData) {
+    createInputMatrix(matrix, title) {
+        let inputWrapper = document.createElement('div');
+        inputWrapper.setAttribute('class', 'matrixWrapper');
+
+        let matrixTitle = document.createElement('div');
+        matrixTitle.setAttribute('class', 'matrixTitle');
+        matrixTitle.appendChild(document.createTextNode((title + " = ")));
+
         let inputMatrix = document.createElement('div');
         inputMatrix.setAttribute('id', 'inputMatrix');
-
-        inputMatrix.appendChild(inputMatrixTitle);
-        for (let i = 0; i < matrixData.x.length; i++) {
-            let inputWrapper = document.createElement('div');
-            inputWrapper.setAttribute('class', 'inputWrapper');
-            for (let j = 0; j < matrixData.x[i].length; j++) {
-                let inputItem = document.createElement('input');
-                inputItem.setAttribute('type', 'number');
-                inputItem.setAttribute('id', 'input' + i + j);
-                inputItem.setAttribute('class', 'matrixEntry');
-                inputItem.onchange = (event) => {reloadResultMatrix(event)};
-                inputItem.setAttribute('value', matrixData.x[i][j]);
-                inputWrapper.appendChild(inputItem);
-            }
-            inputMatrix.appendChild(inputWrapper);
-        }
-        return inputMatrix;
-    }
-    buildMathMatrix(x, name) {
-        let line = "\\[" + name + "=\\begin{bmatrix}";
-        for (let i = 0; i < x.length; i++) {
-            if (i != 0) {
-                line += " \\\\";
-            }
-            for (let j = 0; j < x[i].length; j++) {
-                if (j != 0) {
-                    line += " & "
+        inputMatrix.setAttribute('class', 'matrix');
+        for (let i = 0; i < matrix.length; i++) {
+            for (let j = 0; j < matrix[i].length + 2; j++) {
+                if (j == 0 || j == matrix[i].length + 1) {                    
+                    let inputItem = document.createElement('div');
+                    if (i == 0) {
+                        inputItem.setAttribute('class', 'topEdge');
+                    } else if (i == matrix.length - 1) {
+                        inputItem.setAttribute('class', 'bottomEdge');
+                    } else {
+                        inputItem.setAttribute('class', 'middleEdge');
+                    }
+                    inputMatrix.appendChild(inputItem);
+                } else {
+                    let inputItem = document.createElement('input');
+                    inputItem.setAttribute('type', 'number');
+                    inputItem.setAttribute('id', 'input' + i + (j - 1));
+                    inputItem.setAttribute('class', 'matrixEntry');
+                    inputItem.onchange = (event) => {this.reloadResultMatrix(event)};
+                    inputItem.setAttribute('value', matrix[i][j - 1]);
+                    inputMatrix.appendChild(inputItem);
                 }
-                line += x[i][j];
             }
         }
-        line += "\\end{bmatrix}\\]";
-        return line;
+        inputWrapper.appendChild(matrixTitle);
+        inputWrapper.appendChild(inputMatrix);
+        return inputWrapper;
+    }
+    createMatrix(matrixInput, title) {
+        let matrixWrapper = document.createElement('div');
+        matrixWrapper.setAttribute('class', 'matrixWrapper');
+
+        let matrixTitle = document.createElement('div');
+        matrixTitle.setAttribute('class', 'matrixTitle');
+        matrixTitle.innerHTML = title + " = ";
+
+        let matrix = document.createElement('div');
+        matrix.setAttribute('class', 'matrix');
+        for (let i = 0; i < matrixInput.length; i++) {
+            for (let j = 0; j < matrixInput[i].length + 2; j++) {
+                if (j == 0 || j == matrixInput[i].length + 1) {                    
+                    let matrixEntry = document.createElement('div');
+                    if (i == 0) {
+                        matrixEntry.setAttribute('class', 'topEdge');
+                    } else if (i == matrixInput.length - 1) {
+                        matrixEntry.setAttribute('class', 'bottomEdge');
+                    } else {
+                        matrixEntry.setAttribute('class', 'middleEdge');
+                    }
+                    matrix.appendChild(matrixEntry);
+                } else {
+                    let matrixEntry = document.createElement('div');
+                        matrixEntry.setAttribute('class', 'matrixEntry');
+                        matrixEntry.appendChild(document.createTextNode(matrixInput[i][j - 1]))
+                    matrix.appendChild(matrixEntry);
+                }
+            }
+        }
+        matrixWrapper.appendChild(matrixTitle);
+        matrixWrapper.appendChild(matrix);
+        return matrixWrapper;
+    }
+    reloadResultMatrix(event) {
+        let row = event.target.id.charAt(event.target.id.length - 2);
+        let column = event.target.id.charAt(event.target.id.length - 1);
+        this.state.introContent.matrix[row][column] = event.target.value;
+        let newMatrix = this.createMatrix(roundMatrix(this.state.pca.cov(this.state.introContent.matrix)), "&Sigma;");
+        let mathCovMatrix = document.getElementById('mathCovMatrix');
+        mathCovMatrix.innerHTML = "";
+        mathCovMatrix.appendChild(newMatrix);
     }
 }
 let page = new infoPage();
