@@ -1,3 +1,155 @@
+const irisDataset = [
+    [5.1,3.5,1.4,0.2],
+    [4.9,3.0,1.4,0.2],
+    [4.7,3.2,1.3,0.2],
+    [4.6,3.1,1.5,0.2],
+    [5.0,3.6,1.4,0.2],
+    [5.4,3.9,1.7,0.4],
+    [4.6,3.4,1.4,0.3],
+    [5.0,3.4,1.5,0.2],
+    [4.4,2.9,1.4,0.2],
+    [4.9,3.1,1.5,0.1],
+    [5.4,3.7,1.5,0.2],
+    [4.8,3.4,1.6,0.2],
+    [4.8,3.0,1.4,0.1],
+    [4.3,3.0,1.1,0.1],
+    [5.8,4.0,1.2,0.2],
+    [5.7,4.4,1.5,0.4],
+    [5.4,3.9,1.3,0.4],
+    [5.1,3.5,1.4,0.3],
+    [5.7,3.8,1.7,0.3],
+    [5.1,3.8,1.5,0.3],
+    [5.4,3.4,1.7,0.2],
+    [5.1,3.7,1.5,0.4],
+    [4.6,3.6,1.0,0.2],
+    [5.1,3.3,1.7,0.5],
+    [4.8,3.4,1.9,0.2],
+    [5.0,3.0,1.6,0.2],
+    [5.0,3.4,1.6,0.4],
+    [5.2,3.5,1.5,0.2],
+    [5.2,3.4,1.4,0.2],
+    [4.7,3.2,1.6,0.2],
+    [4.8,3.1,1.6,0.2],
+    [5.4,3.4,1.5,0.4],
+    [5.2,4.1,1.5,0.1],
+    [5.5,4.2,1.4,0.2],
+    [4.9,3.1,1.5,0.1],
+    [5.0,3.2,1.2,0.2],
+    [5.5,3.5,1.3,0.2],
+    [4.9,3.1,1.5,0.1],
+    [4.4,3.0,1.3,0.2],
+    [5.1,3.4,1.5,0.2],
+    [5.0,3.5,1.3,0.3],
+    [4.5,2.3,1.3,0.3],
+    [4.4,3.2,1.3,0.2],
+    [5.0,3.5,1.6,0.6],
+    [5.1,3.8,1.9,0.4],
+    [4.8,3.0,1.4,0.3],
+    [5.1,3.8,1.6,0.2],
+    [4.6,3.2,1.4,0.2],
+    [5.3,3.7,1.5,0.2],
+    [5.0,3.3,1.4,0.2],
+    [7.0,3.2,4.7,1.4],
+    [6.4,3.2,4.5,1.5],
+    [6.9,3.1,4.9,1.5],
+    [5.5,2.3,4.0,1.3],
+    [6.5,2.8,4.6,1.5],
+    [5.7,2.8,4.5,1.3],
+    [6.3,3.3,4.7,1.6],
+    [4.9,2.4,3.3,1.0],
+    [6.6,2.9,4.6,1.3],
+    [5.2,2.7,3.9,1.4],
+    [5.0,2.0,3.5,1.0],
+    [5.9,3.0,4.2,1.5],
+    [6.0,2.2,4.0,1.0],
+    [6.1,2.9,4.7,1.4],
+    [5.6,2.9,3.6,1.3],
+    [6.7,3.1,4.4,1.4],
+    [5.6,3.0,4.5,1.5],
+    [5.8,2.7,4.1,1.0],
+    [6.2,2.2,4.5,1.5],
+    [5.6,2.5,3.9,1.1],
+    [5.9,3.2,4.8,1.8],
+    [6.1,2.8,4.0,1.3],
+    [6.3,2.5,4.9,1.5],
+    [6.1,2.8,4.7,1.2],
+    [6.4,2.9,4.3,1.3],
+    [6.6,3.0,4.4,1.4],
+    [6.8,2.8,4.8,1.4],
+    [6.7,3.0,5.0,1.7],
+    [6.0,2.9,4.5,1.5],
+    [5.7,2.6,3.5,1.0],
+    [5.5,2.4,3.8,1.1],
+    [5.5,2.4,3.7,1.0],
+    [5.8,2.7,3.9,1.2],
+    [6.0,2.7,5.1,1.6],
+    [5.4,3.0,4.5,1.5],
+    [6.0,3.4,4.5,1.6],
+    [6.7,3.1,4.7,1.5],
+    [6.3,2.3,4.4,1.3],
+    [5.6,3.0,4.1,1.3],
+    [5.5,2.5,4.0,1.3],
+    [5.5,2.6,4.4,1.2],
+    [6.1,3.0,4.6,1.4],
+    [5.8,2.6,4.0,1.2],
+    [5.0,2.3,3.3,1.0],
+    [5.6,2.7,4.2,1.3],
+    [5.7,3.0,4.2,1.2],
+    [5.7,2.9,4.2,1.3],
+    [6.2,2.9,4.3,1.3],
+    [5.1,2.5,3.0,1.1],
+    [5.7,2.8,4.1,1.3],
+    [6.3,3.3,6.0,2.5],
+    [5.8,2.7,5.1,1.9],
+    [7.1,3.0,5.9,2.1],
+    [6.3,2.9,5.6,1.8],
+    [6.5,3.0,5.8,2.2],
+    [7.6,3.0,6.6,2.1],
+    [4.9,2.5,4.5,1.7],
+    [7.3,2.9,6.3,1.8],
+    [6.7,2.5,5.8,1.8],
+    [7.2,3.6,6.1,2.5],
+    [6.5,3.2,5.1,2.0],
+    [6.4,2.7,5.3,1.9],
+    [6.8,3.0,5.5,2.1],
+    [5.7,2.5,5.0,2.0],
+    [5.8,2.8,5.1,2.4],
+    [6.4,3.2,5.3,2.3],
+    [6.5,3.0,5.5,1.8],
+    [7.7,3.8,6.7,2.2],
+    [7.7,2.6,6.9,2.3],
+    [6.0,2.2,5.0,1.5],
+    [6.9,3.2,5.7,2.3],
+    [5.6,2.8,4.9,2.0],
+    [7.7,2.8,6.7,2.0],
+    [6.3,2.7,4.9,1.8],
+    [6.7,3.3,5.7,2.1],
+    [7.2,3.2,6.0,1.8],
+    [6.2,2.8,4.8,1.8],
+    [6.1,3.0,4.9,1.8],
+    [6.4,2.8,5.6,2.1],
+    [7.2,3.0,5.8,1.6],
+    [7.4,2.8,6.1,1.9],
+    [7.9,3.8,6.4,2.0],
+    [6.4,2.8,5.6,2.2],
+    [6.3,2.8,5.1,1.5],
+    [6.1,2.6,5.6,1.4],
+    [7.7,3.0,6.1,2.3],
+    [6.3,3.4,5.6,2.4],
+    [6.4,3.1,5.5,1.8],
+    [6.0,3.0,4.8,1.8],
+    [6.9,3.1,5.4,2.1],
+    [6.7,3.1,5.6,2.4],
+    [6.9,3.1,5.1,2.3],
+    [5.8,2.7,5.1,1.9],
+    [6.8,3.2,5.9,2.3],
+    [6.7,3.3,5.7,2.5],
+    [6.7,3.0,5.2,2.3],
+    [6.3,2.5,5.0,1.9],
+    [6.5,3.0,5.2,2.0],
+    [6.2,3.4,5.4,2.3],
+    [5.9,3.0,5.1,1.8]
+];
 /**
  * getColumn
  * @param {matrix} a  - the matrix from which to extract the column
@@ -11,7 +163,6 @@ function getColumn(a, j) {
     }
     return col;
 }
-
 /**
  * getTranspose
  * @param {matrix or vector} m - the matrix to transpose
@@ -24,7 +175,6 @@ function getTranspose(m) {
     }
     return mT;
 }
-
 /**
  * vectorProductV1T
  * @param {vector} v1 - the first vector, will be transpose
@@ -46,7 +196,6 @@ function innerProduct(v1, v2) {
     }
     return m;
 }
-
 /**
  * scaleMatrix
  * @param {matrix} m - the matrix to scale
@@ -80,7 +229,6 @@ function dotProduct(v1, v2) {
     }
     return product;
 }
-
 /**
  * dotProduct
  * @param {matrix} a - the left matrix operand
@@ -102,7 +250,6 @@ function matrixMultiply(a, b) {
     }
     return product;
 }
-
 /**
  * matrixVectorMultiply
  * @param {matrix} m - the matrix to multiply
@@ -131,7 +278,6 @@ function vectorDivideByScalar(v, c) {
         v[i] /= c;
     return v;
 }
-
 /**
  * matrixMinusMatrix
  * @param {matrix} a - the matrix to subtract from
@@ -171,7 +317,6 @@ function matrixMinusVector(a, v) {
     }
     return b;
 }
-
 /**
  * magnitude
  * @param {vector} v - the vector of which to find the magnitude
@@ -184,7 +329,6 @@ function magnitude(v) {
     }
     return sum ** 0.5;
 }
-
 /**
  * singleMean
  * @param {vector} v - the vector of which to find the mean
@@ -196,7 +340,6 @@ function singleMean(v) {
         sum += v[i];
     return sum / v.length;
 }
-
 /**
  * largestCol
  * @param {matrix} x - the matrix from which to find the largest column
@@ -214,7 +357,6 @@ function largestCol(x) {
     }
     return x[largest_mag_col];
 }
-
 /**
  * largestRow
  * @param {matrix} x - the matrix from which to find the largest row
@@ -232,7 +374,6 @@ function largestRow(x) {
     }
     return x[largest_mag_row];
 }
-
 /**
  * singleCov
  * @param {matrix} x - the matrix containing the features
@@ -256,7 +397,6 @@ function roundMatrix(m) {
     }
     return m;
 }
-
 class PrimaryComponentAnalysis {
     mean(x) {
         let means = [];
@@ -302,7 +442,6 @@ class PrimaryComponentAnalysis {
         return matrixMultiply(matrixMinusVector(x, this.mean(x)), wd[0])
     }
 }
-
 class infoPage {
     constructor() {
         this.state = {
@@ -310,32 +449,24 @@ class infoPage {
             pca : new PrimaryComponentAnalysis(),
             introContent : {
                 title : "Play with a Covariance Matrix",
-                matrix : [
-                    [1, 2, 3],
-                    [4, 5, 6],
-                    [7, 8, 9],
-                ]
+                matrix : irisDataset
             }
         };
         
     }
     getIntroSection(introContent) {
-        
         let introSection = document.createElement('section');
             introSection.setAttribute('id', 'introSection');
-
         let introTitle = document.createElement('h2');
             introTitle.setAttribute('class', 'introHeader');
             introTitle.appendChild(document.createTextNode(introContent.title));
-
         let introMatricesWrapper = document.createElement('div');
             introMatricesWrapper.setAttribute('id', 'introMatricesWrapper');
             let inputMatrixWrapper = document.createElement('div');
             inputMatrixWrapper.setAttribute('id', 'inputMatrixWrapper');
-            inputMatrixWrapper.appendChild(this.createInputMatrix(introContent.matrix, "X"));
-
+            inputMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(introContent.matrix), "X", false));
             let mathCovMatrix = document.createElement('div');
-                let sigmaMatrix = this.createMatrix(roundMatrix(this.state.pca.cov(introContent.matrix)), "&Sigma;");
+                let sigmaMatrix = this.createInputMatrix(roundMatrix(this.state.pca.cov(introContent.matrix)), "&Sigma;", true);
                 mathCovMatrix.setAttribute('class', 'mathMatrix');
                 mathCovMatrix.setAttribute('id', 'mathCovMatrix');
                 mathCovMatrix.appendChild(sigmaMatrix);
@@ -354,42 +485,13 @@ class infoPage {
         let intro = this.getIntroSection(this.state.introContent);
         document.getElementById(intro.section).appendChild(intro.content);
     }
-    createLabeledMatrix(matrixInfo) {
-        let m = matrixInfo.rowTitles.length;
-        let n = matrixInfo.columnTitles.length;
-        let matrix = document.createElement('table')
-        matrix.setAttribute('class', 'labeledMatrix');
-        for (let i = 0; i < m + 1; i++) {
-            let row = document.createElement('tr');
-            for (let j = 0; j < n + 1; j++) {
-                let entry = document.createElement('td');
-                if (i == 0) {
-                    if (j == 0) {
-                        entry.appendChild(document.createTextNode(""));    
-                    } else {
-                        entry.setAttribute('class', 'columnTitle');
-                        entry.appendChild(document.createTextNode(matrixInfo.columnTitles[j - 1]));
-                    }
-                } else if (j == 0) {
-                    entry.setAttribute('class', 'rowTitle');
-                    entry.appendChild(document.createTextNode(matrixInfo.rowTitles[i - 1]));
-                } else {
-                    entry.setAttribute('class', 'matrixEntry');
-                    entry.appendChild(document.createTextNode(matrixInfo.matrix[i - 1][j - 1]));
-                }
-                row.appendChild(entry);
-            }
-            matrix.appendChild(row);
-        }
-        return matrix;
-    }
-    createInputMatrix(matrix, title) {
+    createInputMatrix(matrix, title, disabled) {
         let inputWrapper = document.createElement('div');
         inputWrapper.setAttribute('class', 'matrixWrapper');
 
         let matrixTitle = document.createElement('div');
         matrixTitle.setAttribute('class', 'matrixTitle');
-        matrixTitle.appendChild(document.createTextNode((title + " = ")));
+        matrixTitle.innerHTML = title + " = ";
 
         let inputMatrix = document.createElement('div');
         inputMatrix.setAttribute('id', 'inputMatrix');
@@ -398,16 +500,15 @@ class infoPage {
             for (let j = 0; j < matrix[i].length + 2; j++) {
                 if (j == 0 || j == matrix[i].length + 1) {                    
                     let inputItem = document.createElement('div');
-                    if (i == 0) {
-                        inputItem.setAttribute('class', 'topEdge');
-                    } else if (i == matrix.length - 1) {
-                        inputItem.setAttribute('class', 'bottomEdge');
-                    } else {
-                        inputItem.setAttribute('class', 'middleEdge');
-                    }
+                    inputItem.setAttribute('class', 'matrixEntry');
+                    if (i == 0) inputItem.style.borderTopWidth = "2px";
+                    if (i == matrix.length - 1) inputItem.style.borderBottomWidth = "2px";
+                    if (j == 0) inputItem.style.borderLeftWidth = "2px";
+                    if (j == matrix[i].length + 1) inputItem.style.borderRightWidth = "2px";
                     inputMatrix.appendChild(inputItem);
                 } else {
                     let inputItem = document.createElement('input');
+                    if (disabled) inputItem.setAttribute('disabled', true);
                     inputItem.setAttribute('type', 'number');
                     inputItem.setAttribute('id', 'input' + i + (j - 1));
                     inputItem.setAttribute('class', 'matrixEntry');
@@ -421,45 +522,11 @@ class infoPage {
         inputWrapper.appendChild(inputMatrix);
         return inputWrapper;
     }
-    createMatrix(matrixInput, title) {
-        let matrixWrapper = document.createElement('div');
-        matrixWrapper.setAttribute('class', 'matrixWrapper');
-
-        let matrixTitle = document.createElement('div');
-        matrixTitle.setAttribute('class', 'matrixTitle');
-        matrixTitle.innerHTML = title + " = ";
-
-        let matrix = document.createElement('div');
-        matrix.setAttribute('class', 'matrix');
-        for (let i = 0; i < matrixInput.length; i++) {
-            for (let j = 0; j < matrixInput[i].length + 2; j++) {
-                if (j == 0 || j == matrixInput[i].length + 1) {                    
-                    let matrixEntry = document.createElement('div');
-                    if (i == 0) {
-                        matrixEntry.setAttribute('class', 'topEdge');
-                    } else if (i == matrixInput.length - 1) {
-                        matrixEntry.setAttribute('class', 'bottomEdge');
-                    } else {
-                        matrixEntry.setAttribute('class', 'middleEdge');
-                    }
-                    matrix.appendChild(matrixEntry);
-                } else {
-                    let matrixEntry = document.createElement('div');
-                        matrixEntry.setAttribute('class', 'matrixEntry');
-                        matrixEntry.appendChild(document.createTextNode(matrixInput[i][j - 1]))
-                    matrix.appendChild(matrixEntry);
-                }
-            }
-        }
-        matrixWrapper.appendChild(matrixTitle);
-        matrixWrapper.appendChild(matrix);
-        return matrixWrapper;
-    }
     reloadResultMatrix(event) {
         let row = event.target.id.charAt(event.target.id.length - 2);
         let column = event.target.id.charAt(event.target.id.length - 1);
-        this.state.introContent.matrix[row][column] = event.target.value;
-        let newMatrix = this.createMatrix(roundMatrix(this.state.pca.cov(this.state.introContent.matrix)), "&Sigma;");
+        this.state.introContent.matrix[row][column] = Number(event.target.value);
+        let newMatrix = this.createInputMatrix(roundMatrix(this.state.pca.cov(this.state.introContent.matrix)), "&Sigma;", true);
         let mathCovMatrix = document.getElementById('mathCovMatrix');
         mathCovMatrix.innerHTML = "";
         mathCovMatrix.appendChild(newMatrix);
@@ -467,14 +534,3 @@ class infoPage {
 }
 let page = new infoPage();
 page.loadPage();
-
-/* CONTENT OUTLINE
-All matrices have a constructing the covariance matrix. 
-The symmetrix dxd dimensional covariance matrix, where d is the number of dimensions in the dataset, stores the pairwise covariances between the different features
-
-X Matrix
-What is X?
-
-
-
- */
