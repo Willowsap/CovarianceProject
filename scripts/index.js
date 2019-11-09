@@ -1,16 +1,22 @@
 
-    let r = 1;
-    let data = [];
-    let numPoints = 20;
+    let r1 = 1;
+    let r2 = 2;
+    let data1 = [];
+    let data2 = [];
+    let numPoints = 40;
     for (let i = 0; i < numPoints; i++) {
         let x = Math.random()*2 - 1;
         let y = Math.random()*2 - 1;
-        let z = Math.abs((r**2 - x**2 - y**2)) ** 0.5;
+        let z1 = Math.abs((r1**2 - x**2 - y**2)) ** 0.5;
+        let z2 = Math.abs((r2**2 - x**2 - y**2)) ** 0.5;
         if (Math.random() > 0.5) {
-            z *= -1;
+            z1 *= -1;
+            z2 *= -1;
         }
-        data[i] = [x, y, z];
+        data1[i] = [x1, y1, z1];
+        data2[i] = [x2, y2, z2];
     }
+    let data = data1 + data2;
 /**
  * getColumn
  * @param {matrix} a  - the matrix from which to extract the column
@@ -405,7 +411,7 @@ class infoPage {
 let page = new infoPage();
 page.loadPage();
 let trace1 = {
-    x: getColumn(data,0),  y: getColumn(data, 1), z: getColumn(data,2), 
+    x: getColumn(data1,0),  y: getColumn(data1, 1), z: getColumn(data1,2), 
     mode: 'markers',
     marker: {
     size: 12,
@@ -417,7 +423,20 @@ let trace1 = {
     },
     type: 'scatter3d'
 };
-let graphData = [trace1];
+let trace2 = {
+    x: getColumn(data2,0),  y: getColumn(data2, 1), z: getColumn(data2,2), 
+    mode: 'markers',
+    marker: {
+    size: 12,
+    line: {
+        color: 'rgba(100, 100, 100, 0.14)',
+        width: 0.5
+    },
+    opacity: 0.8
+    },
+    type: 'scatter3d'
+};
+let graphData = [trace1, trace2];
 let layout = {
         dragmode: false,
         margin: {
