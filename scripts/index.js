@@ -549,7 +549,7 @@ Plotly.d3.csv('http://student2.cs.appstate.edu/sapphirewe/CovarianceProject/reso
             { return row[key]; });
         }
     var trace1 = {
-        x:unpack(rows, 'x1'),  y: unpack(rows, 'y1'), z: unpack(rows, 'z1'), 
+        x:unpack(rows, 'Hair'),  y: unpack(rows, 'Eye'), z: unpack(rows, 'Sex'), 
         mode: 'markers',
         marker: {
         size: 12,
