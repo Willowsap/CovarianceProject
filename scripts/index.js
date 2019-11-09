@@ -15,7 +15,7 @@
             z1 *= -1;
             z2 *= -1;
         }
-        data1[i] = [x1, y2, z1];
+        data1[i] = [x1, y1, z1];
         data2[i] = [x1, y2, z2];
     }
     let data = data1 + data2;
