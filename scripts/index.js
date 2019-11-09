@@ -1,37 +1,16 @@
-const data = [
-    [1,2,2,],
-    [2,2,2],
-    [4,2,2],
-    [5,2,2],
-    [1,6,2],
-    [2,6,2],
-    [4,6,2],
-    [5,6,2],
-    [1,7,2],
-    [2,7,2],
-    [4,7,2],
-    [5,7,2],
-    [1,3,2],
-    [2,3,2],
-    [4,3,2],
-    [5,3,2],
-    [1,2,1],
-    [2,2,1],
-    [4,2,1],
-    [5,2,1],
-    [1,6,1],
-    [2,6,1],
-    [4,6,1],
-    [5,6,1],
-    [1,7,1],
-    [2,7,1],
-    [4,7,1],
-    [5,7,1],
-    [1,3,1],
-    [2,3,1],
-    [4,3,1],
-    [5,3,1]
-];
+
+    let r = 1;
+    let data = [];
+    let numPoints = 20;
+    for (let i = 0; i < numPoints; i++) {
+        let x = Math.random()*2 - 1;
+        let y = Math.random()*2 - 1;
+        let z = Math.abs((r**2 - x**2 - y**2)) ** 0.5;
+        if (Math.random() > 0.5) {
+            z *= -1;
+        }
+        data[i] = [x, y, z];
+    }
 /**
  * getColumn
  * @param {matrix} a  - the matrix from which to extract the column
@@ -425,45 +404,26 @@ class infoPage {
 }
 let page = new infoPage();
 page.loadPage();
-Plotly.d3.csv('http://student2.cs.appstate.edu/sapphirewe/CovarianceProject/resources/HairEyeColor.csv', function(err, rows){
-        function unpack(rows, key) {
-            return rows.map(function(row) 
-            { return row[key]; });
-        }
-    var trace1 = {
-        x:unpack(rows, 'x1'),  y: unpack(rows, 'y1'), z: unpack(rows, 'z1'), 
-        mode: 'markers',
-        marker: {
-        size: 12,
-        line: {
-            color: 'rgba(217, 217, 217, 0.14)',
-            width: 0.5
-        },
-        opacity: 0.8
-        },
-        type: 'scatter3d'
-    };
-    var trace2 = {
-        x:unpack(rows, 'x2'),  y: unpack(rows, 'y2'), z: unpack(rows, 'z2'), 
-        mode: 'markers',
-        marker: {
-        size: 12,
-        line: {
-            color: 'rgba(100, 100, 100, 0.14)',
-            width: 0.5
-        },
-        opacity: 0.8
-        },
-        type: 'scatter3d'
-    };
-    var data = [trace1, trace2];
-    var layout = {
-            dragmode: false,
-            margin: {
-            l: 0,
-            r: 0,
-            b: 0,
-            t: 0
-        }};
-    Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
-    });
+let trace1 = {
+    x: data[0],  y: data[1], z: data[2], 
+    mode: 'markers',
+    marker: {
+    size: 12,
+    line: {
+        color: 'rgba(217, 217, 217, 0.14)',
+        width: 0.5
+    },
+    opacity: 0.8
+    },
+    type: 'scatter3d'
+};
+let data = [trace1];
+let layout = {
+        dragmode: false,
+        margin: {
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 0
+    }};
+Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
