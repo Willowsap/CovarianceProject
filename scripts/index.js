@@ -543,7 +543,7 @@ class infoPage {
 }
 let page = new infoPage();
 page.loadPage();
-Plotly.d3.csv('../resources/HairEyeColor.csv', function(err, rows){
+Plotly.d3.csv('http://student2.cs.appstate.edu/sapphirewe/CovarianceProject/resources/HairEyeColor.csv', function(err, rows){
         function unpack(rows, key) {
             return rows.map(function(row) 
             { return row[key]; });
