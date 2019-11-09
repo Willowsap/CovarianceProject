@@ -405,7 +405,7 @@ class infoPage {
 let page = new infoPage();
 page.loadPage();
 let trace1 = {
-    x: data[0],  y: data[1], z: data[2], 
+    x: getColumn(data,0),  y: getColumn(data, 1), z: getColumn(data,2), 
     mode: 'markers',
     marker: {
     size: 12,
