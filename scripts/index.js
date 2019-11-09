@@ -561,7 +561,7 @@ Plotly.d3.csv('http://student2.cs.appstate.edu/sapphirewe/CovarianceProject/reso
         },
         type: 'scatter3d'
     };
-    var data = [trace1, trace2];
+    var data = [trace1];
     var layout = {
             dragmode: false,
             margin: {
