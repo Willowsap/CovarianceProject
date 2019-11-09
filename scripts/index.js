@@ -1,14 +1,14 @@
 
-    let r1 = 1;
-    let r2 = 2;
+    let r1 = 0.5;
+    let r2 = 3;
     let data1 = [];
     let data2 = [];
     let numPoints = 40;
     for (let i = 0; i < numPoints; i++) {
         let x1 = Math.random()*2 - 1;
-        let x2 = (Math.random()*2 - 1) * 2;
+        let x2 = (Math.random()*2 - 1) * 3;
         let y1 = Math.random()*2 - 1;
-        let y2 = (Math.random()*2 - 1) * 2;
+        let y2 = (Math.random()*2 - 1) * 3;
         let z1 = Math.abs((r1**2 - x1**2 - y1**2)) ** 0.5;
         let z2 = Math.abs((r2**2 - x2**2 - y2**2)) ** 0.5;
         if (Math.random() > 0.5) {
