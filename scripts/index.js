@@ -417,7 +417,7 @@ let trace1 = {
     },
     type: 'scatter3d'
 };
-let data = [trace1];
+let graphData = [trace1];
 let layout = {
         dragmode: false,
         margin: {
@@ -426,4 +426,4 @@ let layout = {
         b: 0,
         t: 0
     }};
-Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
+Plotly.newPlot('myDiv', graphData, layout, {showSendToCloud: true});
