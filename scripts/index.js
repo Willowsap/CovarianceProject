@@ -3,7 +3,7 @@
     let r2 = 3;
     let data1 = [];
     let data2 = [];
-    let numPoints = 40;
+    let numPoints = 100;
     for (let i = 0; i < numPoints; i++) {
         let x1 = Math.random()*2 - 1;
         let x2 = (Math.random()*3 - 1) * 3;
