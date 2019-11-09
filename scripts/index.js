@@ -443,7 +443,20 @@ Plotly.d3.csv('http://student2.cs.appstate.edu/sapphirewe/CovarianceProject/reso
         },
         type: 'scatter3d'
     };
-    var data = [trace1];
+    var trace1 = {
+        x:unpack(rows, 'Hair'),  y: unpack(rows, 'Eye'), z: unpack(rows, 'Sex'), 
+        mode: 'markers',
+        marker: {
+        size: 12,
+        line: {
+            color: 'rgba(100, 100, 100, 0.14)',
+            width: 0.5
+        },
+        opacity: 0.8
+        },
+        type: 'scatter3d'
+    };
+    var data = [trace1, trace2];
     var layout = {
             dragmode: false,
             margin: {
