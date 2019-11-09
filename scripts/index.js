@@ -5,16 +5,18 @@
     let data2 = [];
     let numPoints = 40;
     for (let i = 0; i < numPoints; i++) {
-        let x = Math.random()*2 - 1;
-        let y = Math.random()*2 - 1;
-        let z1 = Math.abs((r1**2 - x**2 - y**2)) ** 0.5;
-        let z2 = Math.abs((r2**2 - x**2 - y**2)) ** 0.5;
+        let x1 = Math.random()*2 - 1;
+        let x2 = (Math.random()*2 - 1) * 2;
+        let y1 = Math.random()*2 - 1;
+        let y2 = (Math.random()*2 - 1) * 2;
+        let z1 = Math.abs((r1**2 - x1**2 - y1**2)) ** 0.5;
+        let z2 = Math.abs((r2**2 - x2**2 - y2**2)) ** 0.5;
         if (Math.random() > 0.5) {
             z1 *= -1;
             z2 *= -1;
         }
-        data1[i] = [x, y, z1];
-        data2[i] = [x, y, z2];
+        data1[i] = [x1, y2, z1];
+        data2[i] = [x1, y2, z2];
     }
     let data = data1 + data2;
 /**
