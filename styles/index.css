@@ -65,7 +65,6 @@ body {
 }
 .matrix {
     display: grid;
-    grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 0.1fr;
     margin: 8px;
 }
 .matrixEntry {
@@ -73,30 +72,14 @@ body {
     outline: transparent;
     border-width: 0px;
     text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-style: solid;
     border-color: black;
     border-width: 0px;
 }
 input.matrixEntry {
     max-width: 50px;
-}
-.edge {
-    width: 10px;
-    height: 100%;
-}
-.topEdge {
-    border-top-width: 2px;
-}
-.bottomEdge {
-    border-bottom-width: 2px;
-}
-.leftEdge {
-    border-left-width: 2px;
-}
-.rightEdge {
-    border-right-width: 2px;
 }
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
