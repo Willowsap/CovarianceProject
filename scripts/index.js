@@ -4,22 +4,20 @@ function genData() {
     let data = [];
     for (let i = 0; i < numSamples; i++) {
         let sample = [];
-        for (let j = 0; j < 3; j++) {
-            let score = Math.floor((Math.random() * 40) + 60);
-            sample.push(score);
-            if (score > 90) {
-                sample.push((Math.random() * 3) + 6);
-                sample.push((Math.random() * 4) + 10);
-            } else if (score > 80) {
-                sample.push((Math.random() * 6) + 1);
-                sample.push((Math.random() * 1) + 6);
-            } else if (score > 70) {
-                sample.push(1);
-                sample.push(5);
-            } else {
-                sample.push((Math.random() * 1) + 2);
-                sample.push((Math.random() * 0) + 1);
-            }
+        let score = Math.floor((Math.random() * 40) + 60);
+        sample.push(score);
+        if (score > 90) {
+            sample.push((Math.random() * 3) + 6);
+            sample.push((Math.random() * 4) + 10);
+        } else if (score > 80) {
+            sample.push((Math.random() * 6) + 1);
+            sample.push((Math.random() * 1) + 6);
+        } else if (score > 70) {
+            sample.push(1);
+            sample.push(5);
+        } else {
+            sample.push((Math.random() * 1) + 2);
+            sample.push((Math.random() * 0) + 1);
         }
         data.push(sample);
     }
