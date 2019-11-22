@@ -1,24 +1,32 @@
+const numSamples = 100;
 
-    let r1 = 0.5;
-    let r2 = 3;
-    let data1 = [];
-    let data2 = [];
-    let numPoints = 100;
-    for (let i = 0; i < numPoints; i++) {
-        let x1 = Math.random()*2 - 1;
-        let x2 = (Math.random()*3 - 1) * 3;
-        let y1 = Math.random()*2 - 1;
-        let y2 = (Math.random()*3 - 1) * 3;
-        let z1 = Math.abs((r1**2 - x1**2 - y1**2)) ** 0.5;
-        let z2 = Math.abs((r2**2 - x2**2 - y2**2)) ** 0.5;
-        if (Math.random() > 0.5) {
-            z1 *= -1;
-            z2 *= -1;
+function genData() {
+    let data = [];
+    for (let i = 0; i < numSamples; i++) {
+        let sample = [];
+        for (let j = 0; j < 3; j++) {
+            let score = Math.floor((Math.random() * 40) + 60);
+            sample.push(score);
+            if (score > 90) {
+                sample.push(5);
+                sample.push(10);
+            } else if (score > 80) {
+                sample.push(3);
+                sample.push(8);
+            } else if (score > 70) {
+                sample.push(1);
+                sample.push(5);
+            } else {
+                sample.push(0);
+                sample.push(1);
+            }
         }
-        data1[i] = [x1, y1, z1];
-        data2[i] = [x1, y2, z2];
+        data.push(sample);
     }
-    let data = data1 + data2;
+    return data;
+
+}
+const data = genData();
 /**
  * getColumn
  * @param {matrix} a  - the matrix from which to extract the column
@@ -413,7 +421,7 @@ class infoPage {
 let page = new infoPage();
 page.loadPage();
 let trace1 = {
-    x: getColumn(data1,0),  y: getColumn(data1, 1), z: getColumn(data1,2), 
+    x: getColumn(data, 0),  y: getColumn(data, 1), z: getColumn(data, 2), 
     mode: 'markers',
     marker: {
     size: 12,
@@ -425,20 +433,7 @@ let trace1 = {
     },
     type: 'scatter3d'
 };
-let trace2 = {
-    x: getColumn(data2,0),  y: getColumn(data2, 1), z: getColumn(data2,2), 
-    mode: 'markers',
-    marker: {
-    size: 12,
-    line: {
-        color: 'rgba(100, 100, 100, 0.14)',
-        width: 0.5
-    },
-    opacity: 0.8
-    },
-    type: 'scatter3d'
-};
-let graphData = [trace1, trace2];
+let graphData = [trace1];
 let layout = {
         dragmode: false,
         margin: {
