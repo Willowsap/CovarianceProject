@@ -460,7 +460,7 @@ class infoPage {
             title:'Data Labels Hover'
           };
           
-          Plotly.newPlot('myDiv', data, layout);
+          Plotly.newPlot('matrix2d', data, layout);
     }
     
 }
