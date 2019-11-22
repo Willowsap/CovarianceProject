@@ -421,7 +421,7 @@ class infoPage {
 let page = new infoPage();
 page.loadPage();
 let trace1 = {
-    x: getColumn(data, 0),  y: getColumn(data, 1), z: getColumn(data, 2), 
+    "Score on Linear Algebra Test": getColumn(data, 0),  "Amount of Coffee Consumed (cups)": getColumn(data, 1), "Time Spent Studying (hours)": getColumn(data, 2), 
     mode: 'markers',
     marker: {
     size: 12,
