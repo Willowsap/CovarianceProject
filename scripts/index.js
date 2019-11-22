@@ -17,7 +17,7 @@ function genData() {
             sample.push(5);
         } else {
             sample.push((Math.random() * 1) + 2);
-            sample.push((Math.random() * 0) + 1);
+            sample.push((Math.random()));
         }
         data.push(sample);
     }
