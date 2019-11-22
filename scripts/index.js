@@ -327,7 +327,9 @@ class infoPage {
                 matrix : data
             }
         };
-        
+        this.convertedMatrix = this.state.pca(this.state.introContent.matrix, 2, 100);
+        this.plot3dMatrix(this.state.introContent.matrix);
+        this.plot2dMatrix(this.convertedMatrix);
     }
     getIntroSection(introContent) {
         let introSection = document.createElement('section');
@@ -414,30 +416,53 @@ class infoPage {
         mathCovMatrix.innerHTML = "";
         mathCovMatrix.appendChild(newMatrix);
     }
+    plot3dMatrix(matrix) {
+        let trace1 = {
+            x: getColumn(matrix, 0), 
+            y: getColumn(matrix, 1),
+            z: getColumn(matrix, 2), 
+            mode: 'markers',
+                marker: {
+                size: 12,
+                line: {
+                    color: 'rgba(217, 217, 217, 0.14)',
+                    width: 0.5
+                },
+                opacity: 0.8
+            },
+            type: 'scatter3d'
+        };
+        let graphData = [trace1];
+        let layout = {
+                dragmode: false,
+                margin: {
+                l: 0,
+                r: 0,
+                b: 0,
+                t: 0
+            }};
+        Plotly.newPlot('matrix3d', graphData, layout, {showSendToCloud: true});
+    }
+    plot2dMatrix(matrix) {
+        let trace2 = {
+            x: getColumn(matrix, 0),
+            y: getColumn(matrix, 1),
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Team B',
+            text: ['B-a', 'B-b', 'B-c', 'B-d', 'B-e'],
+            marker: { size: 12 }
+          };
+          
+          var data = [ trace2 ];
+          
+          var layout = {
+            title:'Data Labels Hover'
+          };
+          
+          Plotly.newPlot('myDiv', data, layout);
+    }
     
 }
 let page = new infoPage();
 page.loadPage();
-let trace1 = {
-    x: getColumn(data, 0),  y: getColumn(data, 1), z: getColumn(data, 2), 
-    mode: 'markers',
-        marker: {
-        size: 12,
-        line: {
-            color: 'rgba(217, 217, 217, 0.14)',
-            width: 0.5
-        },
-        opacity: 0.8
-    },
-    type: 'scatter3d'
-};
-let graphData = [trace1];
-let layout = {
-        dragmode: false,
-        margin: {
-        l: 0,
-        r: 0,
-        b: 0,
-        t: 0
-    }};
-Plotly.newPlot('myDiv', graphData, layout, {showSendToCloud: true});
