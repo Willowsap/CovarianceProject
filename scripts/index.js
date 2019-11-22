@@ -8,17 +8,17 @@ function genData() {
             let score = Math.floor((Math.random() * 40) + 60);
             sample.push(score);
             if (score > 90) {
-                sample.push(5);
-                sample.push(10);
+                sample.push((Math.random() * 3) + 6);
+                sample.push((Math.random() * 4) + 10);
             } else if (score > 80) {
-                sample.push(3);
-                sample.push(8);
+                sample.push((Math.random() * 6) + 1);
+                sample.push((Math.random() * 1) + 6);
             } else if (score > 70) {
                 sample.push(1);
                 sample.push(5);
             } else {
-                sample.push(0);
-                sample.push(1);
+                sample.push((Math.random() * 1) + 2);
+                sample.push((Math.random() * 0) + 1);
             }
         }
         data.push(sample);
@@ -421,15 +421,15 @@ class infoPage {
 let page = new infoPage();
 page.loadPage();
 let trace1 = {
-    "Score on Linear Algebra Test": getColumn(data, 0),  "Amount of Coffee Consumed (cups)": getColumn(data, 1), "Time Spent Studying (hours)": getColumn(data, 2), 
+    x: getColumn(data, 0),  y: getColumn(data, 1), z: getColumn(data, 2), 
     mode: 'markers',
-    marker: {
-    size: 12,
-    line: {
-        color: 'rgba(217, 217, 217, 0.14)',
-        width: 0.5
-    },
-    opacity: 0.8
+        marker: {
+        size: 12,
+        line: {
+            color: 'rgba(217, 217, 217, 0.14)',
+            width: 0.5
+        },
+        opacity: 0.8
     },
     type: 'scatter3d'
 };
