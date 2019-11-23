@@ -454,13 +454,17 @@ class infoPage {
             marker: { size: 12 }
           };
           
-          var data = [ trace2 ];
-          
-          var layout = {
-            title:'Data Labels Hover'
-          };
-          
-          Plotly.newPlot('matrix2d', data, layout);
+        var data = [ trace2 ];
+        
+        let layout = {
+            dragmode: false,
+            margin: {
+                l: 0,
+                r: 0,
+                b: 0,
+                t: 0
+            }};
+        Plotly.newPlot('matrix2d', data, layout);
     }
     
 }
