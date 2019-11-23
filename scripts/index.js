@@ -292,7 +292,7 @@ class PrimaryComponentAnalysis {
 }
 class infoPage {
     constructor() {
-        this.data = this.genData(100);
+        this.data = this.genData(100, false);
         console.log(this.data);
         this.state = {
             title : "Covariance Matrices",
@@ -302,7 +302,7 @@ class infoPage {
                 matrix : JSON.parse(JSON.stringify(this.data))
             }
         };
-        this.convertedMatrix = this.state.pca.pca(JSON.parse(JSON.stringify(this.data)), 2, 1);
+        this.convertedMatrix = this.state.pca.pca(JSON.parse(JSON.stringify(this.data)), 2, 1000);
         this.plot3dMatrix(this.data);
         this.plot2dMatrix(this.convertedMatrix);
     }
@@ -391,12 +391,12 @@ class infoPage {
         mathCovMatrix.innerHTML = "";
         mathCovMatrix.appendChild(newMatrix);
     }
-    genData(numSamples) {
+    genData(numSamples, perfect) {
         let data = [];
         for (let i = 0; i < numSamples; i++) {
             let studying = Math.floor((Math.random() * 10));
             let coffee = Math.floor((Math.random() * 10));
-            let grade = ((studying*2 + coffee*2) + 60) * ((Math.random() * .2) + .9);
+            let grade = ((studying*2 + coffee*2) + 60) * (perfect ? ((Math.random() * .4) + .7) : 1);
             let sample = [grade, coffee, studying];
             data.push(sample);
         }
@@ -421,6 +421,7 @@ class infoPage {
         };
         let graphData = [trace1];
         let layout = {
+            paper_bgcolor: "lavender",
             dragmode: false,
             margin: {
                 l: 0,
@@ -470,6 +471,7 @@ class infoPage {
         let graphData = [ trace2 ];
         
         var layout = {
+            paper_bgcolor: "lavender",
             title: {
               text:'Linear Algebra Grades',
               font: {
