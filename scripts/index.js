@@ -321,6 +321,7 @@ class infoPage {
 
         let beforeDataMatrixWrapper = document.createElement('div');
             beforeDataMatrixWrapper.setAttribute('id', 'beforeDataMatricesWrapper');
+            beforeDataMatrixWrapper.setAttribute('class', 'doubleWrapper');
             beforeDataMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(info.matrix), "X", false));
 
         beforeDataSection.appendChild(beforeDataTitle);
@@ -340,6 +341,7 @@ class infoPage {
 
         let afterDataMatrixWrapper = document.createElement('div');
             afterDataMatrixWrapper.setAttribute('id', 'afterDataMatrixWrapper');
+            afterDataMatrixWrapper.setAttribute('class', 'doubleWrapper');
             afterDataMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(info.matrix), "X'", true));
 
         afterDataSection.appendChild(afterDataTitle);
@@ -359,6 +361,7 @@ class infoPage {
 
         let covMatrixWrapper = document.createElement('div');
             covMatrixWrapper.setAttribute('id', 'covMatrixWrapper');
+            covMatrixWrapper.setAttribute('class', 'doubleWrapper');
             covMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(info.matrix), "&Sigma;", true));
 
         covMatrixSection.appendChild(covMatrixTitle);
