@@ -328,6 +328,7 @@ class infoPage {
             }
         };
         this.convertedMatrix = this.state.pca.pca(this.state.introContent.matrix, 2, 100);
+        console.log(data);
         this.plot3dMatrix(this.state.introContent.matrix);
         this.plot2dMatrix(this.convertedMatrix);
     }
@@ -417,6 +418,7 @@ class infoPage {
         mathCovMatrix.appendChild(newMatrix);
     }
     plot3dMatrix(matrix) {
+        console.log(matrix);
         let trace1 = {
             x: getColumn(matrix, 0), 
             y: getColumn(matrix, 1),
@@ -444,6 +446,7 @@ class infoPage {
         Plotly.newPlot('matrix3d', graphData, layout, {showSendToCloud: true});
     }
     plot2dMatrix(matrix) {
+        console.log(matrix);
         let trace2 = {
             x: getColumn(matrix, 0),
             y: getColumn(matrix, 1),
