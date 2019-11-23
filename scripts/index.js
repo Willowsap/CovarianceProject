@@ -327,7 +327,7 @@ class infoPage {
                 matrix : data
             }
         };
-        this.convertedMatrix = this.state.pca(this.state.introContent.matrix, 2, 100);
+        this.convertedMatrix = this.state.pca.pca(this.state.introContent.matrix, 2, 100);
         this.plot3dMatrix(this.state.introContent.matrix);
         this.plot2dMatrix(this.convertedMatrix);
     }
