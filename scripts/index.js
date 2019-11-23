@@ -424,11 +424,18 @@ class infoPage {
     reloadResultMatrix(event) {
         let row = event.target.id.charAt(event.target.id.length - 2);
         let column = event.target.id.charAt(event.target.id.length - 1);
-        this.state.introContent.matrix[row][column] = Number(event.target.value);
-        let newMatrix = this.createInputMatrix(roundMatrix(this.pca.cov(this.state.introContent.matrix)), "&Sigma;", true);
-        let mathCovMatrix = document.getElementById('mathCovMatrix');
-        mathCovMatrix.innerHTML = "";
-        mathCovMatrix.appendChild(newMatrix);
+        this.state.beforeData.matrix[row][column] = Number(event.target.value);
+        this.state.covData.matrix = this.pca.cov(this.state.beforeData.matrix);
+        this.state.afterData.matrix = this.pca.pca(this.state.beforeData.matrix, 2, 1000);
+
+        let covMatrixSection = this.getCovMatrixSection(this.state.covData);
+        let afterDataSection = this.getAfterDataSection(this.state.afterData);
+        let covMatrixNode = document.getElementById(covMatrixSection.section);
+        covMatrixNode.removeChild(covMatrixNode.firstElementChild);
+        covMatrixNode.appendChild(covMatrixSection.content);
+        let afterMatrixNode = document.getElementById(afterDataSection.section);
+        afterMatrixNode.removeChild(afterMatrixNode.firstElementChild);
+        afterMatrixNode.appendChild(afterDataSection.content);
     }
     genData(numSamples, perfect) {
         let data = [];
@@ -442,7 +449,6 @@ class infoPage {
         return data;
     }
     plot3dMatrix(matrix) {
-        console.log(matrix);
         let trace1 = {
             x: getColumn(matrix, 0), 
             y: getColumn(matrix, 1),
@@ -493,10 +499,9 @@ class infoPage {
                 },
             },
         };
-        Plotly.newPlot('matrix3d', graphData, layout, {showSendToCloud: true});
+        Plotly.newPlot('matrix3d', graphData, layout, {responsive: true});
     }
     plot2dMatrix(matrix) {
-        console.log(matrix);
         let trace2 = {
             x: getColumn(matrix, 0),
             y: getColumn(matrix, 1),
@@ -532,7 +537,7 @@ class infoPage {
               }
             }
         };
-        Plotly.newPlot('matrix2d', graphData, layout);
+        Plotly.newPlot('matrix2d', graphData, layout, {responsive: true});
     }
 }
 let page = new infoPage();
