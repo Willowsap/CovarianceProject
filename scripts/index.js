@@ -429,6 +429,7 @@ class infoPage {
                 t: 0
             },
             scene: {
+                aspectmode:'cube',
                 xaxis:{
                     title: 'Grade',
                     backgroundcolor: "rgb(200, 200, 230)",
