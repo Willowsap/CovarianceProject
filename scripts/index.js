@@ -334,8 +334,8 @@ class infoPage {
     loadPage() {
         // create header 
         document.getElementById("pageHeader").innerHTML = this.state.title;
-        let intro = this.getIntroSection(this.state.introContent);
-        document.getElementById(intro.section).appendChild(intro.content);
+        //let intro = this.getIntroSection(this.state.introContent);
+        //document.getElementById(intro.section).appendChild(intro.content);
     }
     createInputMatrix(matrix, title, disabled) {
         let inputWrapper = document.createElement('div');
@@ -396,7 +396,7 @@ class infoPage {
         for (let i = 0; i < numSamples; i++) {
             let studying = Math.floor((Math.random() * 10));
             let coffee = Math.floor((Math.random() * 10));
-            let grade = (studying*5 + coffee*5) * ((Math.random() * .2) + .9);
+            let grade = ((studying*2 + coffee*2) + 60) * ((Math.random() * .2) + .9);
             let sample = [grade, coffee, studying];
             data.push(sample);
         }
@@ -428,45 +428,29 @@ class infoPage {
                 b: 0,
                 t: 0
             },
-            title: {
-                text:'Linear Algebra Grades',
-                font: {
-                    family: 'Courier New, monospace',
-                    size: 24
+            scene: {
+                xaxis:{
+                    title: 'Grade',
+                    backgroundcolor: "rgb(200, 200, 230)",
+                    gridcolor: "rgb(255, 255, 255)",
+                    showbackground: true,
+                    zerolinecolor: "rgb(255, 255, 255)",
                 },
-                xref: 'paper',
-                x: 0.05,
-            },
-            xaxis: {
-                title: {
-                    text: 'Grade',
-                    font: {
-                        family: 'Courier New, monospace',
-                        size: 18,
-                        color: '#7f7f7f'
-                    }
+                yaxis:{
+                    title: 'Coffee Consumed (Cups)',
+                    backgroundcolor: "rgb(230, 200,230)",
+                    gridcolor: "rgb(255, 255, 255)",
+                    showbackground: true,
+                    zerolinecolor: "rgb(255, 255, 255)"
+                },
+                zaxis:{
+                    title: 'Time Studied (Hours)',
+                    backgroundcolor: "rgb(230, 230,200)",
+                    gridcolor: "rgb(255, 255, 255)",
+                    showbackground: true,
+                    zerolinecolor: "rgb(255, 255, 255)"
                 },
             },
-            yaxis: {
-                title: {
-                    text: 'Coffee',
-                    font: {
-                        family: 'Courier New, monospace',
-                        size: 18,
-                        color: '#7f7f7f'
-                    }
-                }
-            },
-            zaxis: {
-                title: {
-                    text: 'Studying',
-                    font: {
-                        family: 'Courier New, monospace',
-                        size: 18,
-                        color: '#7f7f7f'
-                    }
-                }
-            }
         };
         Plotly.newPlot('matrix3d', graphData, layout, {showSendToCloud: true});
     }
@@ -496,7 +480,7 @@ class infoPage {
             },
             xaxis: {
               title: {
-                text: 'Grade',
+                text: 'Grade (Normalized)',
                 font: {
                   family: 'Courier New, monospace',
                   size: 18,
