@@ -1,30 +1,3 @@
-const numSamples = 100;
-
-function genData() {
-    let data = [];
-    for (let i = 0; i < numSamples; i++) {
-        let sample = [];
-        let score = Math.floor((Math.random() * 40) + 60);
-        sample.push(score);
-        if (score > 90) {
-            sample.push((Math.random() * 3) + 6);
-            sample.push((Math.random() * 4) + 10);
-        } else if (score > 80) {
-            sample.push((Math.random() * 6) + 1);
-            sample.push((Math.random() * 1) + 6);
-        } else if (score > 70) {
-            sample.push(1);
-            sample.push(5);
-        } else {
-            sample.push((Math.random() * 1) + 2);
-            sample.push((Math.random()));
-        }
-        data.push(sample);
-    }
-    return data;
-
-}
-const data = genData();
 /**
  * getColumn
  * @param {matrix} a  - the matrix from which to extract the column
@@ -319,17 +292,18 @@ class PrimaryComponentAnalysis {
 }
 class infoPage {
     constructor() {
+        this.data = this.genData(100);
+        console.log(this.data);
         this.state = {
             title : "Covariance Matrices",
             pca : new PrimaryComponentAnalysis(),
             introContent : {
                 title : "Play with a Covariance Matrix",
-                matrix : data
+                matrix : JSON.parse(JSON.stringify(this.data))
             }
         };
-        this.convertedMatrix = this.state.pca.pca(this.state.introContent.matrix, 2, 100);
-        console.log(data);
-        this.plot3dMatrix(this.state.introContent.matrix);
+        this.convertedMatrix = this.state.pca.pca(JSON.parse(JSON.stringify(this.data)), 2, 1);
+        this.plot3dMatrix(this.data);
         this.plot2dMatrix(this.convertedMatrix);
     }
     getIntroSection(introContent) {
@@ -342,9 +316,9 @@ class infoPage {
             introMatricesWrapper.setAttribute('id', 'introMatricesWrapper');
             let inputMatrixWrapper = document.createElement('div');
             inputMatrixWrapper.setAttribute('id', 'inputMatrixWrapper');
-            inputMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(introContent.matrix), "X", false));
+            inputMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(introContent.matrix.slice()), "X", false));
             let mathCovMatrix = document.createElement('div');
-                let sigmaMatrix = this.createInputMatrix(roundMatrix(this.state.pca.cov(introContent.matrix)), "&Sigma;", true);
+                let sigmaMatrix = this.createInputMatrix(roundMatrix(this.state.pca.cov(introContent.matrix.slice())), "&Sigma;", true);
                 mathCovMatrix.setAttribute('class', 'mathMatrix');
                 mathCovMatrix.setAttribute('id', 'mathCovMatrix');
                 mathCovMatrix.appendChild(sigmaMatrix);
@@ -417,6 +391,17 @@ class infoPage {
         mathCovMatrix.innerHTML = "";
         mathCovMatrix.appendChild(newMatrix);
     }
+    genData(numSamples) {
+        let data = [];
+        for (let i = 0; i < numSamples; i++) {
+            let studying = Math.floor((Math.random() * 10));
+            let coffee = Math.floor((Math.random() * 10));
+            let grade = (studying*5 + coffee*5) * ((Math.random() * .2) + .9);
+            let sample = [grade, coffee, studying];
+            data.push(sample);
+        }
+        return data;
+    }
     plot3dMatrix(matrix) {
         console.log(matrix);
         let trace1 = {
@@ -436,13 +421,53 @@ class infoPage {
         };
         let graphData = [trace1];
         let layout = {
-                dragmode: false,
-                margin: {
+            dragmode: false,
+            margin: {
                 l: 0,
                 r: 0,
                 b: 0,
                 t: 0
-            }};
+            },
+            title: {
+                text:'Linear Algebra Grades',
+                font: {
+                    family: 'Courier New, monospace',
+                    size: 24
+                },
+                xref: 'paper',
+                x: 0.05,
+            },
+            xaxis: {
+                title: {
+                    text: 'Grade',
+                    font: {
+                        family: 'Courier New, monospace',
+                        size: 18,
+                        color: '#7f7f7f'
+                    }
+                },
+            },
+            yaxis: {
+                title: {
+                    text: 'Coffee',
+                    font: {
+                        family: 'Courier New, monospace',
+                        size: 18,
+                        color: '#7f7f7f'
+                    }
+                }
+            },
+            zaxis: {
+                title: {
+                    text: 'Studying',
+                    font: {
+                        family: 'Courier New, monospace',
+                        size: 18,
+                        color: '#7f7f7f'
+                    }
+                }
+            }
+        };
         Plotly.newPlot('matrix3d', graphData, layout, {showSendToCloud: true});
     }
     plot2dMatrix(matrix) {
@@ -455,21 +480,43 @@ class infoPage {
             name: 'Team B',
             text: ['B-a', 'B-b', 'B-c', 'B-d', 'B-e'],
             marker: { size: 12 }
-          };
+        };
           
-        var data = [ trace2 ];
+        let graphData = [ trace2 ];
         
-        let layout = {
-            dragmode: false,
-            margin: {
-                l: 0,
-                r: 0,
-                b: 0,
-                t: 0
-            }};
-        Plotly.newPlot('matrix2d', data, layout);
+        var layout = {
+            title: {
+              text:'Linear Algebra Grades',
+              font: {
+                family: 'Courier New, monospace',
+                size: 24
+              },
+              xref: 'paper',
+              x: 0.05,
+            },
+            xaxis: {
+              title: {
+                text: 'Grade',
+                font: {
+                  family: 'Courier New, monospace',
+                  size: 18,
+                  color: '#7f7f7f'
+                }
+              },
+            },
+            yaxis: {
+              title: {
+                text: 'Coffee AND Studying',
+                font: {
+                  family: 'Courier New, monospace',
+                  size: 18,
+                  color: '#7f7f7f'
+                }
+              }
+            }
+        };
+        Plotly.newPlot('matrix2d', graphData, layout);
     }
-    
 }
 let page = new infoPage();
 page.loadPage();
