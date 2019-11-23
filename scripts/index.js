@@ -424,9 +424,10 @@ class infoPage {
     reloadResultMatrix(event) {
         let row = event.target.id.charAt(event.target.id.length - 2);
         let column = event.target.id.charAt(event.target.id.length - 1);
+
         this.state.beforeData.matrix[row][column] = Number(event.target.value);
-        this.state.covData.matrix = this.pca.cov(this.state.beforeData.matrix);
-        this.state.afterData.matrix = this.pca.pca(this.state.beforeData.matrix, 2, 1000);
+        this.state.covData.matrix = this.pca.cov(JSON.parse(JSON.stringify(this.state.beforeData.matrix)));
+        this.state.afterData.matrix = this.pca.pca(JSON.parse(JSON.stringify(this.state.beforeData.matrix)), 2, 10);
 
         let covMatrixSection = this.getCovMatrixSection(this.state.covData);
         let afterDataSection = this.getAfterDataSection(this.state.afterData);
@@ -436,6 +437,7 @@ class infoPage {
         let afterMatrixNode = document.getElementById(afterDataSection.section);
         afterMatrixNode.removeChild(afterMatrixNode.firstElementChild);
         afterMatrixNode.appendChild(afterDataSection.content);
+        this.plot3dMatrix(this.state.beforeData.matrix);
     }
     genData(numSamples, perfect) {
         let data = [];
