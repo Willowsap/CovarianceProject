@@ -293,49 +293,88 @@ class PrimaryComponentAnalysis {
 class infoPage {
     constructor() {
         this.data = this.genData(100, false);
-        console.log(this.data);
+        this.pca = new PrimaryComponentAnalysis(),
         this.state = {
-            title : "Covariance Matrices",
-            pca : new PrimaryComponentAnalysis(),
-            introContent : {
-                title : "Play with a Covariance Matrix",
+            title : "Dimensionality Reduction",
+            beforeData : {
+                title : "Gathered Data",
                 matrix : JSON.parse(JSON.stringify(this.data))
+            },
+            afterData : {
+                title : "Processed Data",
+                matrix : this.pca.pca(JSON.parse(JSON.stringify(this.data)), 2, 1000)
+            },
+            covData : {
+                title : "Covariance Matrix",
+                matrix : this.pca.cov(JSON.parse(JSON.stringify(this.data)))
             }
         };
-        this.convertedMatrix = this.state.pca.pca(JSON.parse(JSON.stringify(this.data)), 2, 1000);
-        this.plot3dMatrix(this.data);
-        this.plot2dMatrix(this.convertedMatrix);
     }
-    getIntroSection(introContent) {
-        let introSection = document.createElement('section');
-            introSection.setAttribute('id', 'introSection');
-        let introTitle = document.createElement('h2');
-            introTitle.setAttribute('class', 'introHeader');
-            introTitle.appendChild(document.createTextNode(introContent.title));
-        let introMatricesWrapper = document.createElement('div');
-            introMatricesWrapper.setAttribute('id', 'introMatricesWrapper');
-            let inputMatrixWrapper = document.createElement('div');
-            inputMatrixWrapper.setAttribute('id', 'inputMatrixWrapper');
-            inputMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(introContent.matrix.slice()), "X", false));
-            let mathCovMatrix = document.createElement('div');
-                let sigmaMatrix = this.createInputMatrix(roundMatrix(this.state.pca.cov(introContent.matrix.slice())), "&Sigma;", true);
-                mathCovMatrix.setAttribute('class', 'mathMatrix');
-                mathCovMatrix.setAttribute('id', 'mathCovMatrix');
-                mathCovMatrix.appendChild(sigmaMatrix);
+    getBeforeDataSection(info) {
+        let beforeDataSection = document.createElement('section');
+            beforeDataSection.setAttribute('id', 'beforeDataSection');
+            beforeDataSection.setAttribute('class', 'dataSection');
 
-            introMatricesWrapper.appendChild(inputMatrixWrapper);
-            introMatricesWrapper.appendChild(mathCovMatrix);
+        let beforeDataTitle = document.createElement('h2');
+            beforeDataTitle.setAttribute('class', 'dataHeader');
+            beforeDataTitle.appendChild(document.createTextNode(info.title));
 
-        introSection.appendChild(introTitle);
-        introSection.appendChild(introMatricesWrapper);
+        let beforeDataMatrixWrapper = document.createElement('div');
+            beforeDataMatrixWrapper.setAttribute('id', 'beforeDataMatricesWrapper');
+            beforeDataMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(info.matrix), "X", false));
 
-        return { section : "sectionA", content : introSection};
+        beforeDataSection.appendChild(beforeDataTitle);
+        beforeDataSection.appendChild(beforeDataMatrixWrapper);
+
+        this.plot3dMatrix(info.matrix);
+        return { section : "beforeMatrix", content : beforeDataSection };
+    }
+    getAfterDataSection(info) {
+        let afterDataSection = document.createElement('section');
+            afterDataSection.setAttribute('id', 'afterDataSection');
+            afterDataSection.setAttribute('class', 'dataSection');
+
+        let afterDataTitle = document.createElement('h2');
+            afterDataTitle.setAttribute('class', 'dataHeader');
+            afterDataTitle.appendChild(document.createTextNode(info.title));
+
+        let afterDataMatrixWrapper = document.createElement('div');
+            afterDataMatrixWrapper.setAttribute('id', 'afterDataMatrixWrapper');
+            afterDataMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(info.matrix), "X'", true));
+
+        afterDataSection.appendChild(afterDataTitle);
+        afterDataSection.appendChild(afterDataMatrixWrapper);
+
+        this.plot2dMatrix(info.matrix);
+        return { section : "afterMatrix", content : afterDataSection };
+    }
+    getCovMatrixSection(info) {
+        let covMatrixSection = document.createElement('section');
+            covMatrixSection.setAttribute('id', 'covMatrixSection');
+            covMatrixSection.setAttribute('class', 'dataSection');
+
+        let covMatrixTitle = document.createElement('h2');
+            covMatrixTitle.setAttribute('class', 'dataHeader');
+            covMatrixTitle.appendChild(document.createTextNode(info.title));
+
+        let covMatrixWrapper = document.createElement('div');
+            covMatrixWrapper.setAttribute('id', 'covMatrixWrapper');
+            covMatrixWrapper.appendChild(this.createInputMatrix(roundMatrix(info.matrix), "&Sigma;", true));
+
+        covMatrixSection.appendChild(covMatrixTitle);
+        covMatrixSection.appendChild(covMatrixWrapper);
+
+        return { section : "covMatrix", content : covMatrixSection };
     }
     loadPage() {
         // create header 
         document.getElementById("pageHeader").innerHTML = this.state.title;
-        //let intro = this.getIntroSection(this.state.introContent);
-        //document.getElementById(intro.section).appendChild(intro.content);
+        let beforeDataSection = this.getBeforeDataSection(this.state.beforeData);
+        let covMatrixSection = this.getCovMatrixSection(this.state.covData);
+        let afterDataSection = this.getAfterDataSection(this.state.afterData);
+        document.getElementById(beforeDataSection.section).appendChild(beforeDataSection.content);
+        document.getElementById(covMatrixSection.section).appendChild(covMatrixSection.content);
+        document.getElementById(afterDataSection.section).appendChild(afterDataSection.content);
     }
     createInputMatrix(matrix, title, disabled) {
         let inputWrapper = document.createElement('div');
@@ -386,7 +425,7 @@ class infoPage {
         let row = event.target.id.charAt(event.target.id.length - 2);
         let column = event.target.id.charAt(event.target.id.length - 1);
         this.state.introContent.matrix[row][column] = Number(event.target.value);
-        let newMatrix = this.createInputMatrix(roundMatrix(this.state.pca.cov(this.state.introContent.matrix)), "&Sigma;", true);
+        let newMatrix = this.createInputMatrix(roundMatrix(this.pca.cov(this.state.introContent.matrix)), "&Sigma;", true);
         let mathCovMatrix = document.getElementById('mathCovMatrix');
         mathCovMatrix.innerHTML = "";
         mathCovMatrix.appendChild(newMatrix);
@@ -472,15 +511,6 @@ class infoPage {
         
         var layout = {
             paper_bgcolor: "lavender",
-            title: {
-              text:'Linear Algebra Grades',
-              font: {
-                family: 'Courier New, monospace',
-                size: 24
-              },
-              xref: 'paper',
-              x: 0.05,
-            },
             xaxis: {
               title: {
                 text: 'Grade (Normalized)',
