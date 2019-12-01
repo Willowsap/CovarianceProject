@@ -245,6 +245,18 @@ function roundMatrix(m) {
     }
     return m;
 }
+function principalComponentAnalysis(x, num_components, num_iter) {
+    let w = [];
+    let d = [];
+    for (let i = 0; i < num_components; i++) {
+        let powerResult = this.powerIteration(a, num_iter);
+        d[i] = powerResult[1];
+        w[i] = powerResult[0];
+        a = matrixMinusMatrix(a, scaleMatrix(innerProduct(powerResult[0], powerResult[0]), powerResult[1]));
+    }
+    let w,d = [getTranspose(w), d];
+    return matrixMultiply(matrixMinusVector(x, this.mean(x)), wd[0])
+}
 class PrimaryComponentAnalysis {
     mean(x) {
         let means = [];
