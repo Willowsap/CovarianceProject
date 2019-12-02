@@ -1,3 +1,22 @@
+function principalComponentAnalysis(x, num_components, num_iter) {
+    let covarianceMatrix = this.cov(x);
+    let meanX = this.mean(X);
+    let w = [];
+    let d = [];
+    for (let i = 0; i < num_components; i++) {
+        w[i] = largestRow(covarianceMatrix);
+        for (let j = 0; j < num_iter; j++) {
+            w[i] = matrixVectorMultiply(covarianceMatrix, w[i]);
+            w[i] = vectorDivideByScalar(w[i], magnitude(w[i]));
+        }
+        d[i] = dotProduct(matrixVectorMultiply(covarianceMatrix, v), v) / dotProduct(v, v);
+        w[i] = v;
+        covarianceMatrix = matrixMinusMatrix(covarianceMatrix, 
+            scaleMatrix(innerProduct(w[i], w[i]), d[i]));
+    }
+    w = getTranspose(w);
+    return matrixMultiply(matrixMinusVector(x, meanX), w);
+}
 /**
  * getColumn
  * @param {matrix} a  - the matrix from which to extract the column
@@ -245,18 +264,6 @@ function roundMatrix(m) {
     }
     return m;
 }
-function principalComponentAnalysis(x, num_components, num_iter) {
-    let w = [];
-    let d = [];
-    for (let i = 0; i < num_components; i++) {
-        let powerResult = this.powerIteration(a, num_iter);
-        d[i] = powerResult[1];
-        w[i] = powerResult[0];
-        a = matrixMinusMatrix(a, scaleMatrix(innerProduct(powerResult[0], powerResult[0]), powerResult[1]));
-    }
-    let w,d = [getTranspose(w), d];
-    return matrixMultiply(matrixMinusVector(x, this.mean(x)), wd[0])
-}
 class PrimaryComponentAnalysis {
     mean(x) {
         let means = [];
@@ -300,6 +307,24 @@ class PrimaryComponentAnalysis {
     pca(x, num_components, num_iter) {
         let wd = this.eig(this.cov(x), num_components, num_iter)
         return matrixMultiply(matrixMinusVector(x, this.mean(x)), wd[0])
+    }
+    principalComponentAnalysis(x, num_components, num_iter) {
+        let covarianceMatrix = this.cov(x);
+        let meanX = this.mean(X);
+        let w = [];
+        let d = [];
+        for (let i = 0; i < num_components; i++) {
+            w[i] = largestRow(covarianceMatrix);
+            for (let j = 0; j < num_iter; j++) {
+                w[i] = matrixVectorMultiply(covarianceMatrix, w[i]);
+                w[i] = vectorDivideByScalar(w[i], magnitude(w[i]));
+            }
+            d[i] = dotProduct(matrixVectorMultiply(covarianceMatrix, v), v) / dotProduct(v, v);
+            w[i] = v;
+            a = matrixMinusMatrix(a, scaleMatrix(innerProduct(powerResult[0], powerResult[0]), powerResult[1]));
+        }
+        w = getTranspose(w);
+        return matrixMultiply(matrixMinusVector(x, meanX), w);
     }
 }
 class infoPage {
